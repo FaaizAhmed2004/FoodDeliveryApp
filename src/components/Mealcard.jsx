@@ -1,27 +1,58 @@
-import React from 'react'
 
-function Mealcard({idCategory,strCategory,strCategoryThumb,strCategoryDescription}) {
-    console.log(idCategory)
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import  { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+function Mealcard({ idCategory, strCategory, strCategoryThumb, strCategoryDescription }) {
+  const navigate = useNavigate();
+  const [cart, setCart] = useState([]);
+
+
+
+
+  const handleAddToCart = () => {
+    toast("Your order is added to cart");
+    const newCartItem = {
+      idCategory,
+      strCategory,
+      strCategoryThumb,
+      strCategoryDescription,
+    };
+
+    // Add the new item to the cart
+    setCart((prevCart) => [...prevCart, newCartItem]);
+    alert("Your order is ready to place")
+
+    // Navigate to the dashboard with the updated cart data
+    navigate('/dashboard', { state: { cart: [...cart, newCartItem] } });
+
+  };
+
   return (
-    <>
-     <div className="bg-white shadow-md rounded-lg overflow-hidden max-w-xs mx-auto">
-      <img className="w-full h-48 object-cover" src={strCategory}  />
-      <div className="p-4">
-        <h2 className="text-xl font-semibold text-gray-800 mb-2">{strCategoryThumb}</h2>
-        <p className="text-gray-600 text-sm">{strCategoryDescription}</p>
-      </div>
-      <div className="flex justify-between p-4 border-t">
-        <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition">
-          Buy Now
-        </button>
-        <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition">
+    <div className="card animate-slideUp m-2 bg-base-100 border shadow-xl cursor-pointer">
+      <figure>
+        <img src={strCategoryThumb} alt="Meal" />
+      </figure>
+      <div className="card-body">
+        <h2 className="card-title">
+          {strCategory}
+          <div className="badge badge-ghost hover:bg-gray-400 cursor-pointer">NEW</div>
+        </h2>
+        <p className="line-clamp-1">{strCategoryDescription}</p>
+        <button
+          onClick={handleAddToCart}
+          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
+        >
           Add to Cart
+          <ToastContainer/>
         </button>
       </div>
     </div>
-    </>
-  )
+  );
 }
 
+export default Mealcard;
 
-export default Mealcard
+

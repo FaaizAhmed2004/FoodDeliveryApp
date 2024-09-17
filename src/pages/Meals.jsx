@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { MealContext } from '../components/Context';
 import Card from '../components/Card';
 import axios from 'axios';
+import Mealcard from '../components/Mealcard';
 
 function Meals() {  
   const { data } = useContext(MealContext); 
@@ -26,7 +27,7 @@ function Meals() {
           product && product.length > 0 ? (
             product.map((item) => (
               <div key={item.idMeal} className='w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2'>
-                <Card
+                <Mealcard
                   idCategory={item.idMeal}
                   strCategory={item.strMeal.slice(0,15)}
                   strCategoryThumb={item.strMealThumb}
@@ -35,7 +36,7 @@ function Meals() {
               </div>
             ))
           ) : (
-            <p>Loading...</p>
+            <span className="loading loading-dots loading-lg"></span>
           )
         ) : (
           data && data.length > 0 ? (

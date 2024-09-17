@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink , useNavigate} from 'react-router-dom';
 import Footer from '../components/Footer';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
+    localStorage.setItem('email', email);
+    localStorage.setItem('password', password);
     console.log('Login attempted with:', { email, password });
-  };
+    navigate('/Home')
+    };
 
   const handleSignUp = () => {
     console.log('Navigate to sign-up page');
